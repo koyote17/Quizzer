@@ -1,6 +1,8 @@
 package com.example.quizzer.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,17 +23,20 @@ public class QuizActivity extends AppCompatActivity {
 
     private TextView categoryTv, questionTv;
     private Button answerA, answerB, answerC, answerD, confirmAnswer;
+    private Button[] answerButtons;
 
     private List<Question> questions;
     private int currentQuestionIndex = 0;
     private int score = 0;
+    private boolean answerLocked = false;
 
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_quiz);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.quiz), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -40,9 +45,8 @@ public class QuizActivity extends AppCompatActivity {
 
         initViews();
         loadData();
-        displayQuestions();
-        setupAnswersListeners();
-
+        displayQuestion();
+        setupAnswerListeners();
     }
 
     private void initViews() {
@@ -53,6 +57,8 @@ public class QuizActivity extends AppCompatActivity {
         answerC = findViewById(R.id.answerC);
         answerD = findViewById(R.id.answerD);
         confirmAnswer = findViewById(R.id.confirmAnswerBtn);
+
+        answerButtons = new Button[]{answerA, answerB, answerC, answerD};
     }
 
     private void loadData() {
@@ -61,11 +67,14 @@ public class QuizActivity extends AppCompatActivity {
         questions = QuizRepository.getQuestions(category);
     }
 
-    private void displayQuestions() {
+    private void displayQuestion() {
         if (currentQuestionIndex >= questions.size()) {
             finishQuiz();
             return;
         }
+
+        resetAnswerColors();
+        answerLocked = false;
 
         Question question = questions.get(currentQuestionIndex);
         questionTv.setText(question.getQuestion());
@@ -77,30 +86,53 @@ public class QuizActivity extends AppCompatActivity {
         answerD.setText(answers[3]);
     }
 
-    private void setupAnswersListeners() {
-        answerA.setOnClickListener(v -> checkAnswer(0));
-        answerB.setOnClickListener(v -> checkAnswer(1));
-        answerC.setOnClickListener(v -> checkAnswer(2));
-        answerD.setOnClickListener(v -> checkAnswer(3));
+    private void resetAnswerColors() {
+        for (Button btn : answerButtons) {
+            btn.setBackgroundResource(R.drawable.btn_rectangle); // or default drawable
+        }
     }
 
-    private void checkAnswer(int selectedIndex) {
-        Question question = questions.get(currentQuestionIndex);
+    private void setupAnswerListeners() {
+        for (int i = 0; i < answerButtons.length; i++) {
+            int index = i;
+            answerButtons[i].setOnClickListener(v -> onAnswerClicked(index));
+        }
+    }
 
-        if (selectedIndex == question.getCorrectIndex()) {
-            score++;
-            Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
-        } else { Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show(); }
-        currentQuestionIndex++;
-        displayQuestions();
+    private void onAnswerClicked(int selectedIndex) {
+        if (answerLocked) return;
+        answerLocked = true;
 
+
+        answerButtons[selectedIndex].setBackgroundColor(getColor(R.color.answer_selected));
+
+        // 2️⃣ po 2 sekundach zmiana kolorów w zależności od poprawności
+        handler.postDelayed(() -> {
+            Question question = questions.get(currentQuestionIndex);
+            int correctIndex = question.getCorrectIndex();
+
+            if (selectedIndex == correctIndex) {
+                answerButtons[selectedIndex].setBackgroundColor(getColor(R.color.correct_answer));
+                score++;
+            } else {
+                answerButtons[selectedIndex].setBackgroundColor(getColor(R.color.incorrect_answer));
+                answerButtons[correctIndex].setBackgroundColor(getColor(R.color.correct_answer));
+            }
+
+            handler.postDelayed(() -> {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 1000);
+
+        }, 2000);
     }
 
     private void finishQuiz() {
         Toast.makeText(
                 this,
-                "Your score is : " + score+ "/" + questions.size(),
-                Toast.LENGTH_LONG).show();
+                "Your score is: " + score + "/" + questions.size(),
+                Toast.LENGTH_LONG
+        ).show();
         finish();
     }
 }
