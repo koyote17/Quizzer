@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:padding="16dp"
+    tools:context=".activities.QuizActivity">
+
+    <TextView
+        android:id="@+id/category_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/retro"
+        android:text="CATEGORY"
+        android:textAlignment="center"
+        android:textColor="@color/dark_blue"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/questionTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Question text"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:fontFamily="@font/baskerville"
+        app:layout_constraintTop_toBottomOf="@id/category_text" />
+
+    <LinearLayout
+        android:id="@+id/answers_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/questionTv">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/answerA"
+            style="@style/QuizAnswerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/answerB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuizAnswerButton"
+            android:text="B"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/answerC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuizAnswerButton"
+            android:text="C"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/answerD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuizAnswerButton"
+            android:text="D"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirmAnswerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="64dp"
+            android:backgroundTint="@color/light_green"
+            android:text="ANSWER"
+            style="@style/ConfirmAnswerButton" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
