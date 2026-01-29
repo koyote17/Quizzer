@@ -8,12 +8,11 @@ A simple Android quiz app that offers multiple categories and tracks the user's 
 - XML
 - Gradle
 - Android Studio (project tested with Android Studio Otter)
-- Optional: local JSON or Room for question storage
 
 ## Data flow
 1. `MainActivity` displays categories and starts the quiz by sending an `Intent` extra `CATEGORY`.
 2. `QuizActivity` receives the category, loads corresponding questions (from bundled resources, local database, or JSON), presents questions to the user and updates the score as answers are chosen.
-3. After the quiz, a `ResultsActivity` (or equivalent screen) shows the final score and optionally persists results for later viewing.
+3. After the quiz, a `ResultsActivity` shows the final score and optionally persists results for later viewing.
 
 ## Run locally (Windows)
 Prerequisites: JDK (11+), Android Studio, Android SDK, connected device or emulator.
