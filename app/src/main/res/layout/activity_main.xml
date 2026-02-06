@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".activities.MainActivity"
-    android:padding="16dp">
+    android:paddingTop="56dp"
+    android:paddingHorizontal="24dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -84,21 +85,6 @@
             android:textSize="32sp" />
 
     </GridLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/results_btn"
-        android:layout_width="300dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#f6a6b2"
-        android:text="Previous results"
-        android:textColor="#005582"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

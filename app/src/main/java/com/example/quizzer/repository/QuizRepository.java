@@ -21,7 +21,7 @@ public class QuizRepository {
                 questions.add(new Question(
                         "In tennis, what surface is used at Wimbledon?",
                         new String[]{"Clay", "Grass", "Hard", "Carpet"},
-                        0
+                        1
                 ));
 
                 questions.add(new Question(
@@ -49,7 +49,7 @@ public class QuizRepository {
                 ));
 
                 questions.add(new Question(
-                        "Which boxer was known as “The Greatest” and “The People’s Champion?",
+                        "Which boxer was known as “The Greatest” and “The People’s Champion”?",
                         new String[]{"Muhammad Ali", "Mike Tyson", "Joe Frazier", "George Foreman"},
                         0
                 ));
@@ -65,12 +65,13 @@ public class QuizRepository {
                         new String[]{"New Zealand", "South Africa", "Australia", "England"},
                         0
                 ));
+                break;
 
                 case "HISTORY":
                     questions.add(new Question(
-                            "In which year did World War II end?",
+                            "In which year did World War II start?",
                             new String[]{"1944", "1945", "1939", "1942"},
-                            1
+                            2
                     ));
 
                     questions.add(new Question(
@@ -99,7 +100,7 @@ public class QuizRepository {
 
                     questions.add(new Question(
                             "The Renaissance began in which European country?",
-                            new String[]{"France", "England", "Spain", "Spain"},
+                            new String[]{"France", "England", "Italy", "Spain"},
                             3
                     ));
 
@@ -112,13 +113,13 @@ public class QuizRepository {
                     questions.add(new Question(
                             "Which empire was ruled by Julius Caesar?",
                             new String[]{"Byzantine Empire", "Greek Empire", "Roman Empire", "Persian Empire"},
-                            0
+                            2
                     ));
 
                     questions.add(new Question(
                             "In which year did World War II end?",
-                            new String[]{"", "", "", ""},
-                            2
+                            new String[]{"1944", "1945", "1939", "1942"},
+                            1
                     ));
 
                     questions.add(new Question(
@@ -132,6 +133,7 @@ public class QuizRepository {
                             new String[]{"Troy", "Athens", "Pompeii", "Carthage"},
                             2
                     ));
+                    break;
 
                 case("CITIES"):
                     questions.add(new Question(
@@ -190,9 +192,10 @@ public class QuizRepository {
 
                     questions.add(new Question(
                             "Which city is considered the highest capital city in the world by elevation?",
-                            new String[]{"Quito", "Bogotá", "Kathmandu", "La Paz"},
+                            new String[]{"Quito", "Bogota", "Kathmandu", "La Paz"},
                             3
                     ));
+                    break;
 
                 case ("CARS"):
                     questions.add(new Question(
@@ -234,7 +237,7 @@ public class QuizRepository {
                         questions.add(new Question(
                                 "Which JDM manufacturer is known for the Skyline series?",
                                 new String[]{"Toyota", "Honda", "Nissan", "Mitsubishi"},
-                                1
+                                2
                         ));
 
                         questions.add(new Question(
@@ -254,7 +257,7 @@ public class QuizRepository {
                                 new String[]{"Piotr Wiecek", "Krzysztof Holowczyc", "Robert Kubica", "Jakub Przygonski"},
                                 2
                         ));
-
+                        break;
         }
         return questions;
     }

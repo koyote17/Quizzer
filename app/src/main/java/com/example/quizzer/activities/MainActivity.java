@@ -21,11 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Button historyBtn;
     private Button sportBtn;
     private Button carsBtn;
-    private Button resultsBtn;
 
     private List<Question> questions;
-    private int currentIndex = 0;
-    private int score = 0;
+    String playerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         historyBtn = findViewById(R.id.history_btn);
         sportBtn = findViewById(R.id.sport_btn);
         carsBtn = findViewById(R.id.cars_btn);
-        resultsBtn = findViewById(R.id.results_btn);
+        playerName = getIntent().getStringExtra("PLAYER_NAME");
     }
 
     private void setupClickListeners() {
@@ -56,15 +54,13 @@ public class MainActivity extends AppCompatActivity {
         historyBtn.setOnClickListener(v -> startQuiz("HISTORY"));
         sportBtn.setOnClickListener(v -> startQuiz("SPORT"));
         carsBtn.setOnClickListener(v -> startQuiz("CARS"));
-        resultsBtn.setOnClickListener(v -> {
-            //TODO
-        });
     }
 
 
     private void startQuiz(String category) {
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra("CATEGORY", category);
+        intent.putExtra("PLAYER_NAME", playerName);
         startActivity(intent);
     }
 }

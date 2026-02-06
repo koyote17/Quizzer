@@ -1,9 +1,11 @@
 package com.example.quizzer.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.example.quizzer.R;
 import com.example.quizzer.models.Question;
 import com.example.quizzer.repository.QuizRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
@@ -24,12 +27,13 @@ public class QuizActivity extends AppCompatActivity {
     private TextView categoryTv, questionTv;
     private Button answerA, answerB, answerC, answerD, confirmAnswer;
     private Button[] answerButtons;
+    private ProgressBar quizProgress;
 
     private List<Question> questions;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private boolean answerLocked = false;
-
+    String playerName;
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -56,18 +60,24 @@ public class QuizActivity extends AppCompatActivity {
         answerB = findViewById(R.id.answerB);
         answerC = findViewById(R.id.answerC);
         answerD = findViewById(R.id.answerD);
-        confirmAnswer = findViewById(R.id.confirmAnswerBtn);
 
         answerButtons = new Button[]{answerA, answerB, answerC, answerD};
+        quizProgress = findViewById(R.id.quizProgress);
+
+        playerName = getIntent().getStringExtra("PLAYER_NAME");
     }
 
     private void loadData() {
         String category = getIntent().getStringExtra("CATEGORY");
         categoryTv.setText(category);
         questions = QuizRepository.getQuestions(category);
+        Collections.shuffle(questions);
+        quizProgress.setMax(questions.size());
     }
 
     private void displayQuestion() {
+        quizProgress.setProgress(currentQuestionIndex + 1);
+
         if (currentQuestionIndex >= questions.size()) {
             finishQuiz();
             return;
@@ -88,7 +98,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void resetAnswerColors() {
         for (Button btn : answerButtons) {
-            btn.setBackgroundResource(R.drawable.btn_rectangle); // or default drawable
+            btn.setBackgroundResource(R.drawable.btn_rectangle);
         }
     }
 
@@ -106,7 +116,6 @@ public class QuizActivity extends AppCompatActivity {
 
         answerButtons[selectedIndex].setBackgroundColor(getColor(R.color.answer_selected));
 
-        // 2️⃣ po 2 sekundach zmiana kolorów w zależności od poprawności
         handler.postDelayed(() -> {
             Question question = questions.get(currentQuestionIndex);
             int correctIndex = question.getCorrectIndex();
@@ -128,11 +137,12 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void finishQuiz() {
-        Toast.makeText(
-                this,
-                "Your score is: " + score + "/" + questions.size(),
-                Toast.LENGTH_LONG
-        ).show();
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("SCORE", score);
+        intent.putExtra("TOTAL", questions.size());
+        intent.putExtra("CATEGORY", categoryTv.getText().toString());
+        intent.putExtra("PLAYER_NAME", playerName);
+        startActivity(intent);
         finish();
     }
 }
