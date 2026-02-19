@@ -75,7 +75,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="TRY AGAIN"
-        android:background="@color/light_blue"
+        android:background="@color/light_green"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/resultScoreTv"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +85,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/backToMenuTv"
         android:layout_width="0dp"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:layout_marginLeft="16dp"
@@ -92,7 +93,7 @@
         android:layout_marginEnd="16dp"
         android:textSize="16sp"
         android:text="BACK TO MENU"
-        android:background="@color/light_blue"
+        android:background="@color/incorrect_answer"
         app:layout_constraintTop_toBottomOf="@id/resultScoreTv"
         app:layout_constraintStart_toEndOf="@+id/tryAgainBtn"
         app:layout_constraintEnd_toEndOf="parent" />
